@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   
 } from 'recharts';
-import { Activity, LayoutDashboard, Settings } from 'lucide-react';
+import { Activity,  } from 'lucide-react';
 
 // --- DEFINICIONES DE TIPOS E INTERFACES ---
 
@@ -421,18 +421,8 @@ const LessonLayout: React.FC = () => {
           <Activity size={24} />
         </div>
         <div className="grid gap-1">
-          <h1 className="text-xl font-bold leading-none">Módulo de Control Estadístico</h1>
-          <nav className="text-xs text-slate-400 font-medium tracking-wide uppercase">
-            Curso Avanzado de Calidad
-          </nav>
-        </div>
-        <div className="grid grid-cols-2 gap-3 text-slate-300">
-          <button className="grid place-items-center p-2 hover:bg-slate-800 hover:text-white rounded-md transition-colors cursor-pointer border-none bg-transparent">
-            <LayoutDashboard size={20} />
-          </button>
-          <button className="grid place-items-center p-2 hover:bg-slate-800 hover:text-white rounded-md transition-colors cursor-pointer border-none bg-transparent">
-            <Settings size={20} />
-          </button>
+          <h1 className="text-xl font-bold leading-none">Interpretación de cartas de control</h1>
+
         </div>
       </header>
 
@@ -466,9 +456,7 @@ const LessonLayout: React.FC = () => {
           {/* Panel Izquierdo: Descripción Teórica */}
           <Card className="grid grid-rows-[auto_1fr] h-full">
             <div className="grid gap-2 border-b border-slate-100 p-6 bg-slate-50/50">
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                Sección {activeTabIndex + 1} de {SECTIONS.length}
-              </span>
+             
               <h2 className="text-2xl font-bold text-slate-900 leading-tight">
                 {activeSection.title}
               </h2>
@@ -480,9 +468,7 @@ const LessonLayout: React.FC = () => {
 
           {/* Panel Derecho: Renderizado del Diagrama */}
           <Card className="grid grid-rows-[auto_1fr] h-full min-h-[450px]">
-            <div className="grid p-4 border-b border-slate-100 bg-slate-50/50 text-sm font-semibold text-slate-600 uppercase tracking-wide">
-              Visualización del Patrón
-            </div>
+          
             <div className="grid place-items-center p-4 h-full relative">
               <DiagramRender type={activeSection.chartType} />
             </div>
