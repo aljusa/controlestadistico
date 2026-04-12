@@ -83,9 +83,6 @@ export default function App() {
         <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
           Índices de Capacidad del Proceso
         </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-          Una guía interactiva para comprender cómo evaluar el cumplimiento de las especificaciones mediante la variabilidad y el centrado.
-        </p>
       </header>
 
       <div className="max-w-5xl mx-auto">
@@ -271,32 +268,49 @@ export default function App() {
 
         {/* 7. Ejemplo en R */}
         <Section title="Ejemplo práctico en R" icon={Code}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8"> 
+            <p>
+              Una empresa está evaluando la capacidad de un proceso productivo cuya característica de calidad es una variable continua. Para ello, se recolecta una muestra de 100 observaciones, las cuales siguen aproximadamente una distribución normal con media cercana a 52 unidades y desviación estándar de 4 unidades. <br />
+<br />
+Los límites de especificación del producto son: <br />
+
+Límite inferior de especificación (LSL) = 40 <br />
+Límite superior de especificación (USL) = 60 <br />
+<br />
+Se pide: <br />
+
+Construir una gráfica de control para observaciones individuales (X̄ individual) utilizando los datos proporcionados. <br />
+Realizar un análisis de capacidad del proceso empleando los límites de especificación dados. <br />
+Obtener e interpretar los índices de capacidad del proceso (como Cp y Cpk). <br />
+Con base en los resultados, determinar si el proceso es capaz de cumplir con las especificaciones establecidas.
+            </p>
             <div className="bg-slate-900 rounded-xl p-6 shadow-lg overflow-x-auto text-sm text-slate-300 font-mono">
-              <pre>
-                <code>
-<span className="text-slate-500"># Instalar y cargar librería</span>
-<span className="text-pink-400">install.packages</span>(<span className="text-green-300">"qcc"</span>)
-<span className="text-pink-400">library</span>(qcc)
+              <pre className="text-sm font-mono text-slate-300 whitespace-pre">
+<code>
+<span className="text-slate-500"># Instalar y cargar librería{"\n"}</span>
+<span className="text-pink-400">install.packages</span>(<span className="text-green-300">"qcc"</span>){"\n"}
+<span className="text-pink-400">library</span>(qcc){"\n\n"}
 
-<span className="text-slate-500"># Generar datos simulados</span>
-<span className="text-pink-400">set.seed</span>(<span className="text-orange-300">123</span>)
-datos <span className="text-pink-400">&lt;-</span> <span className="text-blue-300">rnorm</span>(<span className="text-orange-300">100</span>, mean = <span className="text-orange-300">52</span>, sd = <span className="text-orange-300">4</span>)
+<span className="text-slate-500"># Generar datos simulados{"\n"}</span>
+<span className="text-pink-400">set.seed</span>(<span className="text-orange-300">123</span>){"\n"}
+datos <span className="text-pink-400">&lt;-</span> <span className="text-blue-300">rnorm</span>(<span className="text-orange-300">100</span>, mean = <span className="text-orange-300">52</span>, sd = <span className="text-orange-300">4</span>){"\n\n"}
 
-<span className="text-slate-500"># Límites de especificación</span>
-LSL <span className="text-pink-400">&lt;-</span> <span className="text-orange-300">40</span>
-USL <span className="text-pink-400">&lt;-</span> <span className="text-orange-300">60</span>
+<span className="text-slate-500"># Límites de especificación{"\n"}</span>
+LSL <span className="text-pink-400">&lt;-</span> <span className="text-orange-300">40</span>{"\n"}
+USL <span className="text-pink-400">&lt;-</span> <span className="text-orange-300">60</span>{"\n\n"}
 
-<span className="text-slate-500"># Análisis de capacidad</span>
-capacidad <span className="text-pink-400">&lt;-</span> <span className="text-blue-300">process.capability</span>(
-  <span className="text-blue-300">qcc</span>(datos, type = <span className="text-green-300">"xbar.one"</span>),
-  spec.limits = <span className="text-blue-300">c</span>(LSL, USL)
-)
+<span className="text-slate-500"># Análisis de capacidad{"\n"}</span>
+capacidad <span className="text-pink-400">&lt;-</span> <span className="text-blue-300">process.capability</span>({"\n"}
+{"  "}
+<span className="text-blue-300">qcc</span>(datos, type = <span className="text-green-300">"xbar.one"</span>),{"\n"}
+{"  "}
+spec.limits = <span className="text-blue-300">c</span>(LSL, USL){"\n"}
+){"\n\n"}
 
-<span className="text-slate-500"># Mostrar resultados</span>
+<span className="text-slate-500"># Mostrar resultados{"\n"}</span>
 capacidad
-                </code>
-              </pre>
+</code>
+</pre>
             </div>
             <div className="flex flex-col justify-center">
                <VisualContainer caption="Gráfico de capacidad: Histograma de los datos, curva ajustada y límites.">

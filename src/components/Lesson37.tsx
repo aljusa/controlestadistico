@@ -195,10 +195,7 @@ export default function App() {
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
             Análisis de Capacidad del Proceso mediante Gráficos de Control
           </h1>
-          <p className="mt-4 text-blue-100 text-lg max-w-2xl">
-            Comprendiendo la relación fundamental entre la estabilidad estadística y el cumplimiento de especificaciones.
-          </p>
-        </header>
+                </header>
 
         {/* Content Sections */}
         <main className="p-8 space-y-12">
@@ -262,11 +259,23 @@ export default function App() {
           {/* 5. Ejemplo en R */}
           <section>
             <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">
-              5. Ejemplo de Aplicación en R
+              5. Ejemplo de Aplicación
             </h2>
             <p className="text-slate-600 mb-6 leading-relaxed">
-              A continuación se muestra un ejemplo en el lenguaje R que integra un gráfico de control con el análisis de capacidad utilizando la librería <code>qcc</code>. Se construye el gráfico para verificar estabilidad y, al no haber señales de alerta, se procede al cálculo de la capacidad.
-            </p>
+Una empresa desea analizar el desempeño y la estabilidad de un proceso de producción a partir de una muestra de 50 observaciones de una característica de calidad. Se asume que los datos siguen aproximadamente una distribución normal con media cercana a 50 unidades y desviación estándar de 3 unidades.
+<br />
+Los límites de especificación establecidos para el producto son:
+<br />
+Límite inferior de especificación (LSL) = 40 <br />
+Límite superior de especificación (USL) = 60 <br />
+
+Se pide: <br />
+
+Construir un gráfico de control para observaciones individuales (X̄ individual) utilizando los datos proporcionados. <br />
+Evaluar, de manera visual, si el proceso se encuentra bajo control estadístico. <br />
+En caso de que el proceso esté bajo control, realizar un análisis de capacidad del proceso. <br />
+Obtener e interpretar los índices de capacidad del proceso (Cp, Cpk, entre otros). <br />
+Con base en los resultados, concluir si el proceso es capaz de cumplir con los límites de especificación.            </p>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
               {/* Code Block */}
@@ -274,39 +283,39 @@ export default function App() {
                 <div className="flex items-center px-4 py-2 bg-slate-800 text-slate-400 text-xs font-mono border-b border-slate-700">
                   <Terminal size={14} className="mr-2" /> script.R
                 </div>
-                <pre className="p-4 text-sm font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap">
-<span className="text-slate-500"># Instalar y cargar librería</span>
+                <pre className="p-4 text-sm font-mono text-slate-300 overflow-x-auto whitespace-pre">
+<span className="text-slate-500"># Instalar y cargar librería{"\n"}</span>
 {`install.packages("qcc")
 library(qcc)
 
 `}
-<span className="text-slate-500"># Generar datos simulados</span>
+<span className="text-slate-500"># Generar datos simulados{"\n"}</span>
 {`set.seed(123)
 datos <- rnorm(50, mean = 50, sd = 3)
 
 `}
-<span className="text-slate-500"># Límites de especificación</span>
+<span className="text-slate-500"># Límites de especificación{"\n"}</span>
 {`LSL <- 40
 USL <- 60
 
 `}
-<span className="text-slate-500"># Crear gráfico de control (individuos)</span>
+<span className="text-slate-500"># Crear gráfico de control (individuos){"\n"}</span>
 {`grafico <- qcc(datos, type = "xbar.one",
                title = "Gráfico de Control")
 
 `}
-<span className="text-slate-500"># Verificar estabilidad (visual)</span>
+<span className="text-slate-500"># Verificar estabilidad (visual){"\n"}</span>
 {`plot(grafico)
 
 `}
-<span className="text-slate-500"># Si el proceso está bajo control, calcular capacidad</span>
+<span className="text-slate-500"># Si el proceso está bajo control, calcular capacidad{"\n"}</span>
 {`capacidad <- process.capability(grafico,
                                spec.limits = c(LSL, USL))
 
 `}
-<span className="text-slate-500"># Mostrar resultados</span>
+<span className="text-slate-500"># Mostrar resultados{"\n"}</span>
 {`capacidad`}
-                </pre>
+</pre>
               </div>
 
               {/* Visuals for R Output */}

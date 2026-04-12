@@ -31,7 +31,7 @@ const Histogram = ({ showDensity = false, highlightInside = false, scale = 1 }) 
       {/* Density Curve */}
       {showDensity && (
         <path 
-          d="M 40 210 Q 90 200, 110 150 T 190 30 T 270 140 T 350 200 T 380 210" 
+          d="M 40 210 Q 70 200, 100 150 T 190 30  T 380 210" 
           fill="none" stroke="#2563eb" strokeWidth="4" opacity="0.8" 
         />
       )}
@@ -108,9 +108,7 @@ export default function App() {
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
             Análisis de Capacidad de Proceso
           </h1>
-          <p className="text-xl md:text-2xl text-blue-100 font-light max-w-2xl mx-auto">
-            Herramientas estadísticas fundamentales: Histograma y Gráfico de Probabilidad
-          </p>
+     
         </div>
       </header>
 
@@ -205,39 +203,50 @@ export default function App() {
           <div className="p-8 lg:p-10 border-b border-slate-800">
              <div className="flex items-center gap-3 mb-4 text-cyan-400">
                 <Code size={28} />
-                <h2 className="text-2xl font-bold text-white">4. Ejemplo Práctico en R</h2>
+                <h2 className="text-2xl font-bold text-white">4. Ejemplo Práctico </h2>
               </div>
               <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-3xl">
-                A continuación se presenta un ejemplo en el lenguaje R que combina el histograma y el gráfico de probabilidad para evaluar la capacidad de un proceso simulado.
-              </p>
+Una empresa desea evaluar la calidad de un proceso de producción cuya característica de interés sigue aproximadamente una distribución normal. Se recolecta una muestra de 100 observaciones del proceso, con una media aproximada de 50 unidades y una desviación estándar de 5 unidades.
+<br />
+El producto tiene límites de especificación establecidos en:
+<br />
+Límite inferior (LSL) = 40 <br />
+Límite superior (USL) = 60
+<br />
+Se pide:
+<br />
+Generar un histograma de los datos del proceso e identificar visualmente los límites de especificación. <br />
+Evaluar si los datos siguen una distribución normal mediante un gráfico de probabilidad normal (QQ-plot). <br />
+Analizar visualmente si el proceso cumple con los límites de especificación establecidos.              </p>
 
               {/* Grid 2 Columnas para Código y Análisis */}
               <div className="grid md:grid-cols-2 gap-8">
                 {/* Código */}
                 <div className="bg-slate-950 rounded-xl p-6 font-mono text-sm overflow-x-auto border border-slate-800/50">
-<pre className="text-slate-300">
-<span className="text-slate-500"># Generar datos simulados</span>
-<span className="text-cyan-400">set.seed</span>(123)
-datos {'<-'} <span className="text-cyan-400">rnorm</span>(100, mean = 50, sd = 5)
+  <pre className="text-slate-300">
+{`# Generar datos simulados
+set.seed(123)
+datos <- rnorm(100, mean = 50, sd = 5)
 
-<span className="text-slate-500"># Límites de especificación</span>
-LSL {'<-'} 40
-USL {'<-'} 60
+# Límites de especificación
+LSL <- 40
+USL <- 60
 
-<span className="text-slate-500"># Histograma</span>
-<span className="text-cyan-400">hist</span>(datos,
+# Histograma
+hist(datos,
      breaks = 15,
-     col = <span className="text-green-400">"lightblue"</span>,
-     main = <span className="text-green-400">"Histograma del proceso"</span>,
-     xlab = <span className="text-green-400">"Valores"</span>)
-<span className="text-cyan-400">abline</span>(v = LSL, col = <span className="text-green-400">"red"</span>, lwd = 2, lty = 2)
-<span className="text-cyan-400">abline</span>(v = USL, col = <span className="text-green-400">"red"</span>, lwd = 2, lty = 2)
+     col = "lightblue",
+     main = "Histograma del proceso",
+     xlab = "Valores")
+abline(v = LSL, col = "red", lwd = 2, lty = 2)
+abline(v = USL, col = "red", lwd = 2, lty = 2)
 
-<span className="text-slate-500"># Gráfico de probabilidad normal</span>
-<span className="text-cyan-400">qqnorm</span>(datos,
-       main = <span className="text-green-400">"Gráfico de probabilidad normal"</span>)
-<span className="text-cyan-400">qqline</span>(datos, col = <span className="text-green-400">"blue"</span>, lwd = 2)
-</pre>
+# Gráfico de probabilidad normal
+qqnorm(datos,
+       main = "Gráfico de probabilidad normal")
+qqline(datos, col = "blue", lwd = 2)
+`}
+    </pre>
                 </div>
                 
                 {/* Explicación del código */}
@@ -294,10 +303,7 @@ USL {'<-'} 60
 
       </main>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
-        <p>Generado por Ideastoweb • Transformando textos académicos en experiencias interactivas.</p>
-      </footer>
+
     </div>
   );
 }

@@ -36,26 +36,14 @@ export default function MovingAveragePage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans pb-16">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center gap-3">
-          <div className="bg-blue-600 p-2 rounded-lg">
-            <Activity className="text-white w-6 h-6" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-slate-900">Conceptos Estadísticos</h1>
-            <p className="text-sm text-slate-500">Transformando textos académicos a experiencias visuales</p>
-          </div>
-        </div>
-      </header>
+     
 
       <main className="max-w-4xl mx-auto px-6 py-10 space-y-16">
         
         {/* Título Principal */}
         <div className="text-center space-y-4">
           <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">El Gráfico de Promedio Móvil (Moving Average)</h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Una técnica fundamental de suavizamiento para reducir la variabilidad y descubrir las tendencias ocultas en tus datos.
-          </p>
+          
         </div>
 
         {/* Sección 1: Introducción */}
@@ -120,24 +108,43 @@ export default function MovingAveragePage() {
               <Code className="w-6 h-6" />
               <h3 className="text-xl text-white">Ejemplo en R</h3>
             </div>
-            <div className="bg-slate-950 p-4 rounded-lg overflow-x-auto text-sm font-mono text-slate-300 flex-grow border border-slate-800">
-<pre><code><span className="text-slate-500"># Generar datos simulados</span>
-set.seed(123)
-datos &lt;- c(rnorm(30, mean = 0, sd = 1),
-           rnorm(20, mean = 1, sd = 1))
+            <p>
+              Una empresa desea analizar el comportamiento de un proceso a lo largo del tiempo y detectar posibles cambios en su media mediante el uso de técnicas de suavizamiento. <br />
 
-<span className="text-slate-500"># Definir tamaño de ventana</span>
-n &lt;- 5
+Se recolectan 50 observaciones de una característica de calidad. Se sabe que durante las primeras 30 observaciones el proceso tiene una media de 0 y desviación estándar de 1. Posteriormente, el proceso experimenta un cambio en su media a 1, manteniendo constante la variabilidad. <br />
 
-<span className="text-slate-500"># Calcular promedio móvil</span>
-ma &lt;- filter(datos, rep(1/n, n), sides = 1)
+Para analizar la evolución del proceso, se utiliza un promedio móvil con tamaño de ventana de 5 observaciones.
+ <br />
+ <br />
+Se pide: <br />
 
-<span className="text-slate-500"># Graficar</span>
-plot(datos, type = "l", col = "gray",
-     main = "Promedio Móvil",
-     ylab = "Valores", xlab = "Observ.")
+Calcular el promedio móvil de los datos utilizando una ventana de tamaño 5. <br />
+Graficar los datos originales junto con el promedio móvil. <br />
+Analizar cómo el promedio móvil refleja el cambio en la media del proceso. <br />
+Determinar aproximadamente a partir de qué observación se comienza a evidenciar el cambio. <br />
+Explicar la utilidad del promedio móvil para detectar cambios en procesos en comparación con los datos originales.
+            </p>
+            <div className="bg-slate-950 p-4 rounded-lg  text-sm font-mono text-slate-300 flex-grow border border-slate-800">
+<pre className="p-4 text-sm font-mono text-slate-300  whitespace-pre">
+<code>
+<span className="text-slate-500"># Generar datos simulados{"\n"}</span>
+set.seed(123){"\n"}
+datos &lt;- c(rnorm(30, mean = 0, sd = 1),{"\n"}
+{"           "}rnorm(20, mean = 1, sd = 1)){"\n\n"}
+
+<span className="text-slate-500"># Definir tamaño de ventana{"\n"}</span>
+n &lt;- 5{"\n\n"}
+
+<span className="text-slate-500"># Calcular promedio móvil{"\n"}</span>
+ma &lt;- filter(datos, rep(1/n, n), sides = 1){"\n\n"}
+
+<span className="text-slate-500"># Graficar{"\n"}</span>
+plot(datos, type = "l", col = "gray",{"\n"}
+{"     "}main = "Promedio Móvil",{"\n"}
+{"     "}ylab = "Valores", xlab = "Observ."){"\n"}
 lines(ma, col = "blue", lwd = 2)
-</code></pre>
+</code>
+</pre>
             </div>
           </section>
         </div>
@@ -145,7 +152,7 @@ lines(ma, col = "blue", lwd = 2)
         {/* Sección 5: Cierre y Cuadro Comparativo */}
         <section className="space-y-8">
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <h3 className="text-2xl font-bold text-slate-900">Cierre: Comparativa de Métodos</h3>
+            <h3 className="text-2xl font-bold text-slate-900">Comparativa de Métodos</h3>
             <p className="text-slate-700 leading-relaxed text-lg">
               El promedio móvil es una herramienta simple pero efectiva. Aunque es menos sensible que otros métodos avanzados para detectar cambios pequeños, su facilidad de implementación lo hace imprescindible.
             </p>

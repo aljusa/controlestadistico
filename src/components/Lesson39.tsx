@@ -60,12 +60,7 @@ export default function EwmaEducationalPage() {
           <div className="prose text-slate-600 mb-6">
             <p className="leading-relaxed">{explanation}</p>
           </div>
-          <div className="mt-auto p-4 bg-blue-50/50 rounded-lg border border-blue-100">
-            <p className="text-sm text-blue-800 font-medium flex items-center gap-2 mb-1">
-              <Activity size={16} /> Sugerencia Visual
-            </p>
-            <p className="text-sm text-blue-600 italic">{visualSuggestion}</p>
-          </div>
+        
         </div>
         <div className="p-8 md:w-1/2 flex items-center justify-center bg-white border-l border-slate-100 min-h-[300px]">
           {children}
@@ -79,11 +74,7 @@ export default function EwmaEducationalPage() {
       {/* Header */}
       <header className="bg-blue-900 text-white py-16 px-6">
         <div className="max-w-5xl mx-auto">
-          <p className="text-blue-300 font-semibold tracking-wider uppercase text-sm mb-2">Estadística Aplicada</p>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 font-serif">Gráfico EWMA</h1>
-          <p className="text-xl text-blue-100 max-w-2xl leading-relaxed">
-            Explorando el Promedio Móvil Ponderado Exponencialmente: Una guía visual para el control estadístico de procesos.
-          </p>
         </div>
       </header>
 
@@ -269,12 +260,30 @@ export default function EwmaEducationalPage() {
 
         {/* 7. Ejemplo en R */}
         <SectionCard
-          title="Ejemplo Práctico en R"
-          explanation="Este bloque muestra cómo construir un gráfico EWMA en R usando la librería 'qcc'. Se generan datos simulados con un cambio intencional en la media, y el EWMA lo detecta cruzando el límite de control."
+          title="Ejemplo Práctico"
+          explanation=""
           visualSuggestion="El gráfico EWMA resultante donde la línea suavizada cruza los límites de control indicando un posible cambio en el proceso."
           icon={Code}
         >
           <div className="w-full flex flex-col gap-6">
+            <p>
+              Una empresa desea monitorear la estabilidad de un proceso productivo mediante un gráfico de control EWMA (Exponentially Weighted Moving Average), el cual es especialmente útil para detectar pequeños cambios en la media del proceso. <br />
+
+Se recolectan 50 observaciones de una característica de calidad. Se sabe que el proceso inicialmente opera bajo condiciones estables con media 0 y desviación estándar 1. Sin embargo, a partir de la observación 31, ocurre un cambio en la media del proceso a 0.7, manteniéndose constante la variabilidad. <br />
+<br />
+Se pide: <br />
+
+Construir un gráfico de control EWMA utilizando los datos proporcionados.
+Usar los siguientes parámetros: <br />
+- Media objetivo (center) = 0 <br />
+- Desviación estándar = 1 <br />
+- Parámetro de suavizamiento λ (lambda) = 0.2 <br />
+- Límites de control a ±3 sigmas <br />
+Graficar el EWMA y analizar su comportamiento. <br />
+Determinar si el gráfico detecta el cambio en la media del proceso. <br />
+Identificar aproximadamente en qué punto el EWMA señala que el proceso está fuera de control y justificar la respuesta.
+            </p>
+            
             <div className="bg-slate-900 text-slate-300 p-4 rounded-lg text-xs font-mono overflow-x-auto shadow-inner">
               <pre>
                 <code className="text-blue-300"># Instalar y cargar librería</code><br/>
@@ -344,12 +353,6 @@ export default function EwmaEducationalPage() {
         </SectionCard>
 
       </main>
-
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-8 text-center text-sm">
-        <p>Documento Educativo Generado Interactivamente</p>
-        <p className="mt-1 opacity-60">Visualizando Conceptos de Control Estadístico de Procesos</p>
-      </footer>
     </div>
   );
 }

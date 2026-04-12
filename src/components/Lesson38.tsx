@@ -182,33 +182,6 @@ const VisualStandardized = () => {
   );
 };
 
-// Visual 6: Mejoras (Headstart)
-const VisualImprovements = () => {
-  return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 w-full">
-       <svg viewBox="-20 0 420 160" className="w-full h-auto">
-        <line x1="0" y1="130" x2="400" y2="130" stroke="#94a3b8" strokeWidth="2" />
-        <line x1="0" y1="30" x2="400" y2="30" stroke="#ef4444" strokeWidth="2" strokeDasharray="4" />
-        <text x="0" y="25" fontSize="12" fill="#ef4444">Límite de decisión (h)</text>
-        <text x="-15" y="135" fontSize="12" fill="#64748b">0</text>
-
-        {/* Sin Headstart */}
-        <path d="M 0,130 L 50,120 L 100,105 L 150,90 L 200,60 L 250,40 L 300,10" fill="none" stroke="#94a3b8" strokeWidth="3" />
-        <text x="305" y="15" fontSize="10" fill="#64748b">CUSUM Normal</text>
-
-        {/* Con Headstart */}
-        <path d="M 0,80 L 50,70 L 100,55 L 150,40 L 200,10" fill="none" stroke="#8b5cf6" strokeWidth="3" />
-        <circle cx="0" cy="80" r="5" fill="#8b5cf6" />
-        <text x="10" y="75" fontSize="12" fill="#8b5cf6" fontWeight="bold">Headstart (h/2)</text>
-        <text x="205" y="15" fontSize="10" fill="#8b5cf6" fontWeight="bold">Detección anticipada</text>
-        
-        {/* Indicador visual de la ventaja */}
-        <line x1="180" y1="30" x2="280" y2="30" stroke="#10b981" strokeWidth="3" />
-        <text x="190" y="45" fontSize="10" fill="#10b981">Tiempo ahorrado</text>
-      </svg>
-    </div>
-  );
-};
 
 // Visual 7: Variantes (Esquema)
 const VisualVariants = () => {
@@ -386,12 +359,6 @@ const sections = [
     Visual: VisualStandardized
   },
   {
-    id: "mejoras",
-    title: "Mejoras del Cusum",
-    text: "Existen extensiones que mejoran su desempeño: \n• Respuesta más rápida ante cambios grandes. \n• Headstart: inicialización no nula para detección más temprana. \n• Cusum unilaterales: enfocados en una sola dirección del cambio.",
-    Visual: VisualImprovements
-  },
-  {
     id: "variantes",
     title: "Variantes del Cusum",
     text: "El método puede adaptarse a diferentes objetivos como el monitoreo de la variabilidad, la aplicación a otros estadísticos, el método de máscara V o el Cusum auto-inicializable.",
@@ -399,8 +366,22 @@ const sections = [
   },
   {
     id: "codigo",
-    title: "Ejemplo en R",
-    text: "A continuación se muestra un ejemplo básico de cómo implementar un gráfico CUSUM en R utilizando datos simulados de la librería 'qcc'. Este código genera un conjunto de datos donde ocurre un pequeño cambio en la media y lo detecta visualmente.",
+    title: "Ejemplo",
+    text: `Una empresa desea detectar posibles cambios en el comportamiento de un proceso productivo utilizando herramientas de control estadístico. Para ello, se recolectan 40 observaciones de una característica de calidad.
+
+Se sabe que el proceso inicialmente opera bajo condiciones normales con media 0 y desviación estándar 1. Sin embargo, después de cierto punto, el proceso podría haber sufrido un cambio en su media a 0.5, manteniendo la misma variabilidad.
+
+Se pide:
+
+Construir un gráfico CUSUM (suma acumulada) utilizando los datos proporcionados.
+Utilizar como parámetros del gráfico:
+-  Media objetivo (center) = 0
+-  Desviación estándar = 1
+-  Intervalo de decisión (decision interval) = 5
+-  Cambio a detectar = 1 desviación estándar
+Graficar el CUSUM y analizar su comportamiento.
+Determinar si existe evidencia de un cambio en la media del proceso.
+Identificar aproximadamente en qué punto ocurre el cambio y justificar la respuesta.`,
     Visual: VisualRExample
   },
   {
@@ -417,15 +398,11 @@ export default function App() {
       {/* Header */}
       <header className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-16 px-6 sm:px-12 lg:px-24 mb-12 shadow-md">
         <div className="max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-            <TrendingUp size={16} /> Control Estadístico de Procesos
-          </div>
+        
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
             Gráficos CUSUM
           </h1>
-          <p className="text-lg md:text-xl text-blue-100 max-w-2xl leading-relaxed">
-            Una guía visual para entender las Sumas Acumulativas y cómo detectan pequeñas desviaciones en los procesos antes que los métodos tradicionales.
-          </p>
+         
         </div>
       </header>
 
