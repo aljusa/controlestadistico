@@ -1,342 +1,344 @@
 import React from 'react';
-import { BookOpen, BarChart2, Layers, CheckCircle, Factory, GitMerge, Combine, Network } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Info, Terminal } from 'lucide-react';
 
-// --- Componentes Visuales (Diagramas SVG generados a partir de las sugerencias) ---
+// --- Visual Components ---
 
-const ScopeVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full drop-shadow-sm">
-    <defs>
-      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-        <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1" />
-      </marker>
-    </defs>
-    {/* Conexiones */}
-    <path d="M 60 40 Q 150 40 230 100" fill="none" stroke="#6366f1" strokeWidth="2" markerEnd="url(#arrowhead)" opacity="0.6"/>
-    <path d="M 60 100 Q 150 100 230 100" fill="none" stroke="#6366f1" strokeWidth="2" markerEnd="url(#arrowhead)" opacity="0.6"/>
-    <path d="M 60 160 Q 150 160 230 100" fill="none" stroke="#6366f1" strokeWidth="2" markerEnd="url(#arrowhead)" opacity="0.6"/>
-    
-    {/* Nodos de entrada */}
-    <circle cx="50" cy="40" r="15" fill="#e0e7ff" stroke="#4f46e5" strokeWidth="2"/>
-    <text x="50" y="44" fontSize="10" textAnchor="middle" fill="#3730a3" fontWeight="bold">X1</text>
-    
-    <circle cx="50" cy="100" r="15" fill="#e0e7ff" stroke="#4f46e5" strokeWidth="2"/>
-    <text x="50" y="104" fontSize="10" textAnchor="middle" fill="#3730a3" fontWeight="bold">X2</text>
-    
-    <circle cx="50" cy="160" r="15" fill="#e0e7ff" stroke="#4f46e5" strokeWidth="2"/>
-    <text x="50" y="164" fontSize="10" textAnchor="middle" fill="#3730a3" fontWeight="bold">X3</text>
-    
-    {/* Nodo de resultado */}
-    <circle cx="240" cy="100" r="22" fill="#4f46e5" stroke="#312e81" strokeWidth="2"/>
-    <text x="240" y="104" fontSize="12" textAnchor="middle" fill="white" fontWeight="bold">Y</text>
-  </svg>
+const FlowChart1 = () => (
+  <div className="flex flex-col md:flex-row items-center justify-center gap-4 w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
+    <div className="flex flex-col items-center p-4 bg-blue-600 text-white rounded-lg shadow-md w-48 text-center">
+      <span className="font-bold">1. Gráfico de Control</span>
+      <span className="text-xs mt-1 text-blue-100">Verificar Estabilidad</span>
+    </div>
+    <div className="flex flex-col items-center">
+      <div className="w-1 h-8 md:w-8 md:h-1 bg-slate-400"></div>
+      <div className="text-xs font-semibold text-slate-500 mt-1 md:mt-0 md:absolute md:-translate-y-4">Condición: Estable</div>
+    </div>
+    <div className="flex flex-col items-center p-4 bg-emerald-600 text-white rounded-lg shadow-md w-48 text-center">
+      <span className="font-bold">2. Análisis de Capacidad</span>
+      <span className="text-xs mt-1 text-emerald-100">Evaluar Especificaciones</span>
+    </div>
+  </div>
 );
 
-const ConceptVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    {/* Ejes Multidimensionales (Isometric 3D) */}
-    <line x1="150" y1="150" x2="150" y2="30" stroke="#94a3b8" strokeWidth="2" />
-    <line x1="150" y1="150" x2="50" y2="180" stroke="#94a3b8" strokeWidth="2" />
-    <line x1="150" y1="150" x2="250" y2="180" stroke="#94a3b8" strokeWidth="2" />
-    
-    <text x="140" y="30" fontSize="12" fill="#64748b">Z</text>
-    <text x="40" y="180" fontSize="12" fill="#64748b">X</text>
-    <text x="255" y="180" fontSize="12" fill="#64748b">Y</text>
+const UnstableControlChart = () => (
+  <div className="w-full max-w-lg mx-auto bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+    <svg viewBox="0 0 400 200" className="w-full h-auto">
+      {/* Background and Grid */}
+      <rect width="400" height="200" fill="#f8fafc" rx="8" />
+      <line x1="40" y1="50" x2="380" y2="50" stroke="#ef4444" strokeWidth="2" strokeDasharray="4" /> {/* UCL */}
+      <text x="10" y="54" fontSize="12" fill="#ef4444" fontWeight="bold">UCL</text>
+      <line x1="40" y1="100" x2="380" y2="100" stroke="#10b981" strokeWidth="2" /> {/* Mean */}
+      <text x="10" y="104" fontSize="12" fill="#10b981" fontWeight="bold">Media</text>
+      <line x1="40" y1="150" x2="380" y2="150" stroke="#ef4444" strokeWidth="2" strokeDasharray="4" /> {/* LCL */}
+      <text x="10" y="154" fontSize="12" fill="#ef4444" fontWeight="bold">LCL</text>
 
-    {/* Observaciones (Puntos distribuidos) */}
-    {[...Array(25)].map((_, i) => (
-      <circle 
-        key={i} 
-        cx={100 + Math.random() * 100} 
-        cy={50 + Math.random() * 100} 
-        r="4" 
-        fill={`hsl(${Math.random() * 360}, 70%, 50%)`} 
-        opacity="0.8"
-      />
-    ))}
-  </svg>
+      {/* Data Line */}
+      <path d="M 50 110 L 80 90 L 110 105 L 140 160 L 170 115 L 200 95 L 230 40 L 260 85 L 290 100 L 320 120 L 350 95" fill="none" stroke="#3b82f6" strokeWidth="2" />
+      
+      {/* Points */}
+      <circle cx="50" cy="110" r="4" fill="#3b82f6" />
+      <circle cx="80" cy="90" r="4" fill="#3b82f6" />
+      <circle cx="110" cy="105" r="4" fill="#3b82f6" />
+      
+      {/* Out of control lower */}
+      <circle cx="140" cy="160" r="6" fill="#ef4444" className="animate-pulse" />
+      <text x="130" y="180" fontSize="10" fill="#ef4444" fontWeight="bold">Inestable</text>
+      
+      <circle cx="170" cy="115" r="4" fill="#3b82f6" />
+      <circle cx="200" cy="95" r="4" fill="#3b82f6" />
+      
+      {/* Out of control upper */}
+      <circle cx="230" cy="40" r="6" fill="#ef4444" className="animate-pulse" />
+      <text x="215" y="30" fontSize="10" fill="#ef4444" fontWeight="bold">Inestable</text>
+      
+      <circle cx="260" cy="85" r="4" fill="#3b82f6" />
+      <circle cx="290" cy="100" r="4" fill="#3b82f6" />
+      <circle cx="320" cy="120" r="4" fill="#3b82f6" />
+      <circle cx="350" cy="95" r="4" fill="#3b82f6" />
+    </svg>
+    <p className="text-center text-sm text-slate-500 mt-2 italic">Puntos rojos indican variación por causas especiales.</p>
+  </div>
 );
 
-const PCAVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    {/* Ejes originales ligeros */}
-    <line x1="30" y1="170" x2="270" y2="170" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4" />
-    <line x1="30" y1="170" x2="30" y2="30" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4" />
-    
-    {/* Nube de puntos correlacionada */}
-    <ellipse cx="150" cy="100" rx="90" ry="30" fill="#e0e7ff" opacity="0.5" transform="rotate(-30 150 100)" />
-    {[...Array(40)].map((_, i) => {
-      const t = Math.random() * Math.PI * 2;
-      const u = Math.random() + Math.random();
-      const r = u > 1 ? 2 - u : u;
-      const x = 150 + r * Math.cos(t) * 80;
-      const y = 100 + r * Math.sin(t) * 20;
-      // Rotar punto
-      const rx = 150 + (x - 150)*Math.cos(-30*Math.PI/180) - (y - 100)*Math.sin(-30*Math.PI/180);
-      const ry = 100 + (x - 150)*Math.sin(-30*Math.PI/180) + (y - 100)*Math.cos(-30*Math.PI/180);
-      return <circle key={i} cx={rx} cy={ry} r="3" fill="#6366f1" />
-    })}
-    
-    {/* Componentes Principales */}
-    <defs>
-      <marker id="pca-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-        <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
-      </marker>
-    </defs>
-    {/* PC1 */}
-    <line x1="70" y1="146" x2="230" y2="54" stroke="#ef4444" strokeWidth="3" markerEnd="url(#pca-arrow)" />
-    <text x="240" y="45" fontSize="12" fill="#ef4444" fontWeight="bold">PC1</text>
-    {/* PC2 */}
-    <line x1="130" y1="65" x2="170" y2="135" stroke="#ef4444" strokeWidth="3" markerEnd="url(#pca-arrow)" />
-    <text x="175" y="145" fontSize="12" fill="#ef4444" fontWeight="bold">PC2</text>
-  </svg>
+const CapabilityMatrix = () => (
+  <div className="w-full max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex flex-col items-center text-center">
+      <CheckCircle className="text-emerald-500 mb-2" size={32} />
+      <h4 className="font-bold text-emerald-800">Estable y Capaz</h4>
+      <p className="text-sm text-emerald-700 mt-1">El escenario ideal. Proceso predecible y que cumple holgadamente las especificaciones.</p>
+    </div>
+    <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-xl flex flex-col items-center text-center">
+      <AlertTriangle className="text-yellow-500 mb-2" size={32} />
+      <h4 className="font-bold text-yellow-800">Estable pero No Capaz</h4>
+      <p className="text-sm text-yellow-700 mt-1">Es predecible, pero su variabilidad natural es mayor que la tolerancia permitida.</p>
+    </div>
+    <div className="bg-orange-50 border border-orange-200 p-4 rounded-xl flex flex-col items-center text-center">
+      <Info className="text-orange-500 mb-2" size={32} />
+      <h4 className="font-bold text-orange-800">Inestable pero "Capaz"</h4>
+      <p className="text-sm text-orange-700 mt-1">Cumple por ahora, pero al ser inestable (impredecible), podría fallar en cualquier momento.</p>
+    </div>
+    <div className="bg-red-50 border border-red-200 p-4 rounded-xl flex flex-col items-center text-center">
+      <AlertTriangle className="text-red-500 mb-2" size={32} />
+      <h4 className="font-bold text-red-800">Inestable y No Capaz</h4>
+      <p className="text-sm text-red-700 mt-1">El peor escenario. Completamente impredecible y generando defectos constantemente.</p>
+    </div>
+  </div>
 );
 
-const DiscriminantVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    {/* Frontera de decisión */}
-    <line x1="50" y1="180" x2="250" y2="20" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-    <text x="220" y="30" fontSize="10" fill="#334155" transform="rotate(-38 220 30)">Frontera de Clasificación</text>
+const SigmaEstimationChart = () => (
+  <div className="w-full max-w-lg mx-auto bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+    <svg viewBox="0 0 400 200" className="w-full h-auto">
+      <rect width="400" height="200" fill="#f8fafc" rx="8" />
+      <line x1="40" y1="50" x2="380" y2="50" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4" />
+      <line x1="40" y1="100" x2="380" y2="100" stroke="#64748b" strokeWidth="2" /> {/* Mean */}
+      <line x1="40" y1="150" x2="380" y2="150" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4" />
+      
+      {/* Path */}
+      <path d="M 50 110 L 100 80 L 150 120 L 200 90 L 250 105 L 300 85 L 350 115" fill="none" stroke="#3b82f6" strokeWidth="2" />
+      
+      {/* Points */}
+      {[ [50, 110], [100, 80], [150, 120], [200, 90], [250, 105], [300, 85], [350, 115] ].map((pt, i) => (
+        <circle key={i} cx={pt[0]} cy={pt[1]} r="4" fill="#3b82f6" />
+      ))}
 
-    {/* Grupo A */}
-    {[...Array(20)].map((_, i) => (
-      <circle key={`a-${i}`} cx={50 + Math.random() * 80} cy={30 + Math.random() * 80} r="4" fill="#10b981" />
-    ))}
-    
-    {/* Grupo B */}
-    {[...Array(20)].map((_, i) => (
-      <circle key={`b-${i}`} cx={160 + Math.random() * 80} cy={100 + Math.random() * 80} r="4" fill="#f59e0b" />
-    ))}
-  </svg>
+      {/* Annotations for variation */}
+      <line x1="100" y1="80" x2="100" y2="100" stroke="#ef4444" strokeWidth="2" strokeDasharray="2" />
+      <line x1="150" y1="120" x2="150" y2="100" stroke="#ef4444" strokeWidth="2" strokeDasharray="2" />
+      <line x1="300" y1="85" x2="300" y2="100" stroke="#ef4444" strokeWidth="2" strokeDasharray="2" />
+      
+      <text x="160" y="70" fontSize="12" fill="#ef4444" fontWeight="bold" className="bg-white">Estimar σ a partir de la</text>
+      <text x="160" y="85" fontSize="12" fill="#ef4444" fontWeight="bold" className="bg-white">variabilidad de subgrupos (ej. R̄)</text>
+      
+      <path d="M 140 75 Q 100 75 100 80" fill="none" stroke="#ef4444" strokeWidth="1" markerEnd="url(#arrow)" />
+      
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
 );
 
-const ClusteringVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    {/* Cluster 1 (Rojo) */}
-    <circle cx="80" cy="70" r="40" fill="#fee2e2" opacity="0.6"/>
-    {[...Array(15)].map((_, i) => (
-      <circle key={`c1-${i}`} cx={60 + Math.random() * 40} cy={50 + Math.random() * 40} r="4" fill="#ef4444" />
-    ))}
-    
-    {/* Cluster 2 (Azul) */}
-    <circle cx="220" cy="80" r="45" fill="#e0e7ff" opacity="0.6"/>
-    {[...Array(18)].map((_, i) => (
-      <polygon key={`c2-${i}`} points="0,-4 4,4 -4,4" fill="#3b82f6" transform={`translate(${200 + Math.random() * 40}, ${60 + Math.random() * 40})`} />
-    ))}
+const RChartsSimulation = () => (
+  <div className="flex flex-col md:flex-row gap-4 w-full">
+    {/* Control Chart */}
+    <div className="flex-1 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+      <h5 className="text-center font-semibold text-sm mb-2 text-slate-700">1. Gráfico de Control (qcc)</h5>
+      <svg viewBox="0 0 200 120" className="w-full h-auto">
+        <rect width="200" height="120" fill="#fafafa" rx="4" />
+        <line x1="20" y1="30" x2="180" y2="30" stroke="#ef4444" strokeWidth="1" strokeDasharray="2" />
+        <line x1="20" y1="60" x2="180" y2="60" stroke="#10b981" strokeWidth="1" />
+        <line x1="20" y1="90" x2="180" y2="90" stroke="#ef4444" strokeWidth="1" strokeDasharray="2" />
+        <path d="M 30 65 L 50 55 L 70 70 L 90 45 L 110 50 L 130 60 L 150 55 L 170 65" fill="none" stroke="#3b82f6" strokeWidth="1.5" />
+        {[30, 50, 70, 90, 110, 130, 150, 170].map((x, i) => (
+           <circle key={i} cx={x} cy={[65, 55, 70, 45, 50, 60, 55, 65][i]} r="2" fill="#3b82f6" />
+        ))}
+      </svg>
+      <p className="text-xs text-center text-emerald-600 font-semibold mt-2">✓ Proceso Estable</p>
+    </div>
 
-    {/* Cluster 3 (Verde) */}
-    <circle cx="150" cy="150" r="35" fill="#d1fae5" opacity="0.6"/>
-    {[...Array(12)].map((_, i) => (
-      <rect key={`c3-${i}`} x={135 + Math.random() * 30} y={135 + Math.random() * 30} width="7" height="7" fill="#10b981" />
-    ))}
-  </svg>
+    {/* Capability Histogram */}
+    <div className="flex-1 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+      <h5 className="text-center font-semibold text-sm mb-2 text-slate-700">2. Capacidad (process.capability)</h5>
+      <svg viewBox="0 0 200 120" className="w-full h-auto items-end">
+        <rect width="200" height="120" fill="#fafafa" rx="4" />
+        {/* Spec Limits */}
+        <line x1="40" y1="10" x2="40" y2="100" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4" />
+        <text x="35" y="112" fontSize="8" fill="#ef4444" fontWeight="bold">LSL</text>
+        
+        <line x1="160" y1="10" x2="160" y2="100" stroke="#ef4444" strokeWidth="1.5" strokeDasharray="4" />
+        <text x="155" y="112" fontSize="8" fill="#ef4444" fontWeight="bold">USL</text>
+
+        {/* Histogram Bars */}
+        <rect x="60" y="80" width="15" height="20" fill="#93c5fd" />
+        <rect x="76" y="50" width="15" height="50" fill="#93c5fd" />
+        <rect x="92" y="20" width="15" height="80" fill="#93c5fd" />
+        <rect x="108" y="30" width="15" height="70" fill="#93c5fd" />
+        <rect x="124" y="60" width="15" height="40" fill="#93c5fd" />
+        
+        {/* Bell Curve */}
+        <path d="M 40 100 Q 80 100 100 20 Q 120 100 160 100" fill="none" stroke="#2563eb" strokeWidth="2" />
+        <line x1="20" y1="100" x2="180" y2="100" stroke="#64748b" strokeWidth="1" />
+      </svg>
+      <p className="text-xs text-center text-blue-600 font-semibold mt-2">Cp y Cpk calculados</p>
+    </div>
+  </div>
 );
 
-const AdvantagesVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    <defs>
-      <marker id="adv-arrow" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
-        <polygon points="0 0, 8 2.5, 0 5" fill="#475569" />
-      </marker>
-    </defs>
-    
-    {/* Nodo Central */}
-    <rect x="90" y="20" width="120" height="30" rx="5" fill="#3b82f6" />
-    <text x="150" y="40" fontSize="12" textAnchor="middle" fill="white" fontWeight="bold">Datos Multivariantes</text>
-
-    {/* Líneas */}
-    <path d="M 150 50 L 150 70 L 60 70 L 60 110" fill="none" stroke="#475569" strokeWidth="2" markerEnd="url(#adv-arrow)" />
-    <path d="M 150 50 L 150 110" fill="none" stroke="#475569" strokeWidth="2" markerEnd="url(#adv-arrow)" />
-    <path d="M 150 50 L 150 70 L 240 70 L 240 110" fill="none" stroke="#475569" strokeWidth="2" markerEnd="url(#adv-arrow)" />
-
-    {/* Nodos Hijos */}
-    <rect x="15" y="115" width="90" height="40" rx="5" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
-    <text x="60" y="140" fontSize="11" textAnchor="middle" fill="#334155" fontWeight="bold">Patrones</text>
-
-    <rect x="110" y="115" width="80" height="40" rx="5" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
-    <text x="150" y="140" fontSize="11" textAnchor="middle" fill="#334155" fontWeight="bold">Simplificación</text>
-
-    <rect x="195" y="115" width="90" height="40" rx="5" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
-    <text x="240" y="135" fontSize="11" textAnchor="middle" fill="#334155" fontWeight="bold">Mejores</text>
-    <text x="240" y="148" fontSize="11" textAnchor="middle" fill="#334155" fontWeight="bold">Decisiones</text>
-  </svg>
+const ConclusionFlow = () => (
+  <div className="flex flex-col md:flex-row items-center justify-center gap-2 w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
+    <div className="px-4 py-2 bg-white border-2 border-slate-300 rounded-full text-sm font-semibold text-slate-700 shadow-sm">
+      Control Estadístico
+    </div>
+    <span className="text-slate-400 rotate-90 md:rotate-0">➔</span>
+    <div className="px-4 py-2 bg-emerald-100 border-2 border-emerald-400 rounded-full text-sm font-semibold text-emerald-800 shadow-sm">
+      Proceso Estable
+    </div>
+    <span className="text-slate-400 rotate-90 md:rotate-0">➔</span>
+    <div className="px-4 py-2 bg-blue-100 border-2 border-blue-400 rounded-full text-sm font-semibold text-blue-800 shadow-sm">
+      Análisis de Capacidad
+    </div>
+  </div>
 );
 
-const IndustrialVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    {/* Sensores */}
-    <rect x="20" y="40" width="70" height="25" rx="3" fill="#e2e8f0" stroke="#64748b"/>
-    <text x="55" y="56" fontSize="10" textAnchor="middle" fill="#334155">Sensor Temp</text>
 
-    <rect x="20" y="90" width="70" height="25" rx="3" fill="#e2e8f0" stroke="#64748b"/>
-    <text x="55" y="106" fontSize="10" textAnchor="middle" fill="#334155">Sensor Presión</text>
-
-    <rect x="20" y="140" width="70" height="25" rx="3" fill="#e2e8f0" stroke="#64748b"/>
-    <text x="55" y="156" fontSize="10" textAnchor="middle" fill="#334155">Sensor Velocidad</text>
-
-    {/* Conexiones */}
-    <path d="M 90 52 Q 130 52 140 100" fill="none" stroke="#2563eb" strokeWidth="2" strokeDasharray="3,3" />
-    <path d="M 90 102 L 140 102" fill="none" stroke="#2563eb" strokeWidth="2" strokeDasharray="3,3" />
-    <path d="M 90 152 Q 130 152 140 102" fill="none" stroke="#2563eb" strokeWidth="2" strokeDasharray="3,3" />
-
-    {/* Sistema Central */}
-    <rect x="140" y="60" width="100" height="85" rx="8" fill="#1e293b" />
-    <text x="190" y="90" fontSize="12" textAnchor="middle" fill="white" fontWeight="bold">Sistema</text>
-    <text x="190" y="105" fontSize="12" textAnchor="middle" fill="white" fontWeight="bold">Multivariante</text>
-    <rect x="165" y="115" width="50" height="15" rx="2" fill="#22c55e" />
-    <text x="190" y="126" fontSize="9" textAnchor="middle" fill="white">Optimizado</text>
-  </svg>
-);
-
-const ClosingVisual = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    {/* Funnel/Flujo */}
-    <polygon points="30,40 100,40 120,100 100,160 30,160 50,100" fill="#f1f5f9" stroke="#94a3b8" strokeWidth="2"/>
-    <text x="65" y="105" fontSize="11" textAnchor="middle" fill="#334155" fontWeight="bold">Múltiples</text>
-    <text x="65" y="118" fontSize="11" textAnchor="middle" fill="#334155" fontWeight="bold">Variables</text>
-
-    <path d="M 125 100 L 165 100" fill="none" stroke="#3b82f6" strokeWidth="3" markerEnd="url(#adv-arrow)"/>
-
-    <circle cx="200" cy="100" r="35" fill="#3b82f6" opacity="0.1" stroke="#2563eb" strokeWidth="2"/>
-    <text x="200" y="98" fontSize="11" textAnchor="middle" fill="#1e40af" fontWeight="bold">Análisis</text>
-    <text x="200" y="111" fontSize="11" textAnchor="middle" fill="#1e40af" fontWeight="bold">Integral</text>
-
-    <path d="M 235 100 L 265 100" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#adv-arrow)"/>
-
-    <rect x="250" y="60" width="40" height="80" rx="4" fill="#10b981" />
-    <text x="270" y="95" fontSize="10" textAnchor="middle" fill="white" fontWeight="bold" transform="rotate(-90 270 95)">Mejora</text>
-    <text x="270" y="115" fontSize="10" textAnchor="middle" fill="white" fontWeight="bold" transform="rotate(-90 270 115)">Continua</text>
-  </svg>
-);
-
-// --- Estructura de Datos de la Lección ---
-
-const lessonData = [
-  {
-    id: 1,
-    title: "Alcance de los métodos multivariantes",
-    icon: <Network className="text-indigo-500 w-6 h-6" />,
-    explanation: "En muchos procesos reales, múltiples variables influyen simultáneamente en los resultados. Los métodos multivariantes permiten analizar estas variables de forma conjunta, capturando relaciones complejas que no pueden detectarse al estudiar cada variable por separado.",
-    VisualComponent: ScopeVisual
-  },
-  {
-    id: 2,
-    title: "Concepto de análisis multivariante",
-    icon: <Layers className="text-blue-500 w-6 h-6" />,
-    explanation: "El análisis multivariante estudia múltiples variables al mismo tiempo para identificar patrones, relaciones y estructuras en los datos. Este enfoque es esencial cuando las variables están correlacionadas y su efecto combinado influye en el comportamiento del sistema.",
-    VisualComponent: ConceptVisual
-  },
-  {
-    id: 3,
-    title: "Análisis de componentes principales (PCA)",
-    icon: <Combine className="text-red-500 w-6 h-6" />,
-    explanation: "El PCA es una técnica que transforma un conjunto de variables correlacionadas en un nuevo conjunto de variables no correlacionadas llamadas componentes principales. Estas componentes capturan la mayor parte de la variabilidad de los datos con menos dimensiones.",
-    VisualComponent: PCAVisual
-  },
-  {
-    id: 4,
-    title: "Análisis discriminante",
-    icon: <GitMerge className="text-emerald-500 w-6 h-6" />,
-    explanation: "El análisis discriminante se utiliza para clasificar observaciones en grupos previamente definidos. Identifica qué variables permiten diferenciar mejor entre categorías, facilitando la toma de decisiones basada en clasificación.",
-    VisualComponent: DiscriminantVisual
-  },
-  {
-    id: 5,
-    title: "Análisis de conglomerados (clustering)",
-    icon: <BarChart2 className="text-purple-500 w-6 h-6" />,
-    explanation: "El clustering agrupa observaciones en conjuntos (clusters) según su similitud, sin necesidad de categorías predefinidas. Es útil para descubrir estructuras ocultas o segmentar datos en grupos homogéneos.",
-    VisualComponent: ClusteringVisual
-  },
-  {
-    id: 6,
-    title: "Ventajas de los métodos multivariantes",
-    icon: <CheckCircle className="text-teal-500 w-6 h-6" />,
-    explanation: "Estos métodos permiten detectar patrones complejos, reducir la dimensionalidad de los datos y mejorar la toma de decisiones. Su capacidad para analizar múltiples variables simultáneamente los hace especialmente valiosos en entornos complejos.",
-    VisualComponent: AdvantagesVisual
-  },
-  {
-    id: 7,
-    title: "Aplicación en procesos industriales",
-    icon: <Factory className="text-orange-500 w-6 h-6" />,
-    explanation: "Los métodos multivariantes se aplican en procesos industriales complejos donde existen muchas variables interrelacionadas, como en manufactura avanzada, control de calidad y optimización de procesos. Permiten una comprensión más completa del sistema.",
-    VisualComponent: IndustrialVisual
-  },
-  {
-    id: 8,
-    title: "Cierre conceptual",
-    icon: <BookOpen className="text-slate-600 w-6 h-6" />,
-    explanation: "Los métodos multivariantes ofrecen un análisis profundo e integral de procesos con múltiples variables. Su aplicación facilita la identificación de patrones, la reducción de complejidad y la mejora continua en sistemas productivos.",
-    VisualComponent: ClosingVisual
-  }
-];
-
-// --- Componente Principal ---
+// --- Main Application ---
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-12">
-      {/* Cabecera / Header */}
-      <header className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-6 py-6 flex items-center gap-4">
-          <div className="p-3 bg-indigo-100 rounded-lg">
-            <BookOpen className="w-8 h-8 text-indigo-700" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Lección 6: Métodos Multivariantes</h1>
-            <p className="text-slate-500 font-medium mt-1">Síntesis académica interactiva y visual</p>
-          </div>
-        </div>
-      </header>
-
-      {/* Contenido Principal */}
-      <main className="max-w-5xl mx-auto px-6 mt-10">
+    <div className="min-h-screen bg-slate-100 py-10 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden">
         
-        <div className="grid grid-cols-1 gap-10">
-          {lessonData.map((section, index) => (
-            <section 
-              key={section.id} 
-              className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow duration-300"
-            >
-              <div className="flex flex-col md:flex-row">
-                
-                {/* Panel de Texto (Explicación) */}
-                <div className="p-8 md:w-1/2 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="bg-slate-50 p-2 rounded-md border border-slate-100">
-                      {section.icon}
-                    </div>
-                    <h2 className="text-xl font-bold text-slate-800">
-                      {section.title}
-                    </h2>
-                  </div>
-                  <p className="text-slate-600 leading-relaxed text-lg">
-                    {section.explanation}
-                  </p>
-                  
-                  {/* Etiqueta visual sutil */}
-                  <div className="mt-6 inline-flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                    <span className="w-6 h-[1px] bg-slate-300"></span>
-                    Concepto {index + 1} de {lessonData.length}
-                  </div>
-                </div>
+        {/* Header */}
+        <header className="bg-gradient-to-r from-blue-700 to-indigo-800 p-8 text-white">
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            Análisis de Capacidad del Proceso mediante Gráficos de Control
+          </h1>
+          <p className="mt-4 text-blue-100 text-lg max-w-2xl">
+            Comprendiendo la relación fundamental entre la estabilidad estadística y el cumplimiento de especificaciones.
+          </p>
+        </header>
 
-                {/* Panel Visual (Diagrama interactivo simulado) */}
-                <div className="bg-slate-50 border-t md:border-t-0 md:border-l border-slate-100 p-6 md:w-1/2 flex items-center justify-center min-h-[250px]">
-                  <div className="w-full max-w-[300px] aspect-video">
-                    <section.VisualComponent />
-                  </div>
-                </div>
+        {/* Content Sections */}
+        <main className="p-8 space-y-12">
+          
+          {/* 1. Introducción */}
+          <section>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">
+              1. Introducción
+            </h2>
+            <p className="text-slate-600 mb-6 leading-relaxed">
+              El análisis de capacidad del proceso mediante gráficos de control combina dos enfoques: primero verificar que el proceso esté bajo <strong>control estadístico</strong> y luego evaluar si cumple con las especificaciones. Este enfoque evita conclusiones erróneas al analizar procesos inestables.
+            </p>
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Representación Visual</h3>
+              <FlowChart1 />
+            </div>
+          </section>
 
+          {/* 2. Verificación de estabilidad */}
+          <section>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">
+              2. Verificación de Estabilidad
+            </h2>
+            <p className="text-slate-600 mb-6 leading-relaxed">
+              Antes de calcular índices de capacidad, es fundamental confirmar que el proceso está bajo control estadístico. Si existen <strong>puntos fuera de control</strong>, la estimación de la capacidad no será confiable, ya que el proceso es impredecible.
+            </p>
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Ejemplo de Inestabilidad</h3>
+              <UnstableControlChart />
+            </div>
+          </section>
+
+          {/* 3. Relación entre control y capacidad */}
+          <section>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">
+              3. Relación entre Control y Capacidad
+            </h2>
+            <p className="text-slate-600 mb-6 leading-relaxed">
+              Un proceso puede estar bajo control pero no ser capaz (demasiada variabilidad), o puede ser capaz pero estar fuera de control (inestable). Ambos análisis son complementarios y definen la salud real del proceso.
+            </p>
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Matriz Conceptual</h3>
+              <CapabilityMatrix />
+            </div>
+          </section>
+
+          {/* 4. Uso del gráfico de control para estimar σ */}
+          <section>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">
+              4. Uso del gráfico de control para estimar σ
+            </h2>
+            <p className="text-slate-600 mb-6 leading-relaxed">
+              Cuando el proceso está bajo control, la <strong>desviación estándar (σ)</strong> puede estimarse a partir del gráfico de control (por ejemplo, usando rangos móviles o subgrupos promediados). Esta estimación rigurosa se utiliza posteriormente para calcular los índices <strong>Cp</strong> y <strong>Cpk</strong>.
+            </p>
+            <div className="mt-4">
+              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Estimación de Variabilidad</h3>
+              <SigmaEstimationChart />
+            </div>
+          </section>
+
+          {/* 5. Ejemplo en R */}
+          <section>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">
+              5. Ejemplo de Aplicación en R
+            </h2>
+            <p className="text-slate-600 mb-6 leading-relaxed">
+              A continuación se muestra un ejemplo en el lenguaje R que integra un gráfico de control con el análisis de capacidad utilizando la librería <code>qcc</code>. Se construye el gráfico para verificar estabilidad y, al no haber señales de alerta, se procede al cálculo de la capacidad.
+            </p>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              {/* Code Block */}
+              <div className="bg-slate-900 rounded-xl overflow-hidden shadow-lg">
+                <div className="flex items-center px-4 py-2 bg-slate-800 text-slate-400 text-xs font-mono border-b border-slate-700">
+                  <Terminal size={14} className="mr-2" /> script.R
+                </div>
+                <pre className="p-4 text-sm font-mono text-slate-300 overflow-x-auto whitespace-pre-wrap">
+<span className="text-slate-500"># Instalar y cargar librería</span>
+{`install.packages("qcc")
+library(qcc)
+
+`}
+<span className="text-slate-500"># Generar datos simulados</span>
+{`set.seed(123)
+datos <- rnorm(50, mean = 50, sd = 3)
+
+`}
+<span className="text-slate-500"># Límites de especificación</span>
+{`LSL <- 40
+USL <- 60
+
+`}
+<span className="text-slate-500"># Crear gráfico de control (individuos)</span>
+{`grafico <- qcc(datos, type = "xbar.one",
+               title = "Gráfico de Control")
+
+`}
+<span className="text-slate-500"># Verificar estabilidad (visual)</span>
+{`plot(grafico)
+
+`}
+<span className="text-slate-500"># Si el proceso está bajo control, calcular capacidad</span>
+{`capacidad <- process.capability(grafico,
+                               spec.limits = c(LSL, USL))
+
+`}
+<span className="text-slate-500"># Mostrar resultados</span>
+{`capacidad`}
+                </pre>
               </div>
-            </section>
-          ))}
-        </div>
 
-      </main>
+              {/* Visuals for R Output */}
+              <div>
+                <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Salida Visual Simulada</h3>
+                <RChartsSimulation />
+                <div className="mt-4 p-4 bg-blue-50 text-blue-800 rounded-lg text-sm">
+                  <strong>En este ejemplo:</strong>
+                  <ul className="list-disc ml-5 mt-2 space-y-1">
+                    <li>Se construye un gráfico de control para verificar estabilidad.</li>
+                    <li>Si no hay señales de fuera de control, se procede al cálculo de Cp y Cpk usando la variabilidad estimada del gráfico.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
 
-      {/* Footer */}
-      <footer className="max-w-5xl mx-auto px-6 mt-16 text-center text-slate-500 text-sm">
-        <p>Material educativo generado por Ideastoweb. Diseñado para facilitar la comprensión de conceptos multivariantes complejos a través de estructuración y representaciones visuales.</p>
-      </footer>
+          {/* 6. Cierre */}
+          <section className="bg-slate-50 -mx-8 px-8 py-8 border-t border-slate-200">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">
+              6. Cierre y Conclusiones
+            </h2>
+            <p className="text-slate-600 mb-6 leading-relaxed">
+              El análisis de capacidad basado en gráficos de control garantiza que las conclusiones sobre el desempeño del proceso sean válidas. <strong>Primero se asegura la estabilidad y luego se evalúa la capacidad</strong>, integrando ambos enfoques en un análisis metodológicamente coherente.
+            </p>
+            <div className="mt-6 flex justify-center">
+              <ConclusionFlow />
+            </div>
+          </section>
+
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,325 +1,302 @@
 import React from 'react';
-import { ArrowRight, Settings, BarChart2, TrendingUp, RefreshCw, Layers, GitMerge, Combine, Shuffle, CheckCircle2 } from 'lucide-react';
+import { BookOpen, BarChart2, Activity, Code, GitMerge, CheckCircle, Info } from 'lucide-react';
 
-// --- COMPONENTES VISUALES ---
+// --- COMPONENTES VISUALES (Diagramas SVG) ---
 
-const VisualAlcance = () => (
-  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
-    <div className="flex flex-col gap-2">
-      <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-md text-sm font-medium border border-blue-200 text-center">Var. Entrada 1</div>
-      <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-md text-sm font-medium border border-blue-200 text-center">Var. Entrada 2</div>
-      <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-md text-sm font-medium border border-blue-200 text-center">Var. Entrada 3</div>
-    </div>
-    
-    <ArrowRight className="text-slate-400 rotate-90 sm:rotate-0" size={24} />
-    
-    <div className="flex flex-col items-center justify-center p-4 bg-indigo-600 text-white rounded-lg shadow-md w-40 text-center relative overflow-hidden">
-      <Settings className="absolute opacity-20 -right-2 -bottom-2" size={48} />
-      <span className="font-bold relative z-10">Proceso</span>
-      <span className="text-xs text-indigo-200 relative z-10">(Experimento Controlado)</span>
-    </div>
+const Histogram = ({ showDensity = false, highlightInside = false, scale = 1 }) => {
+  const bars = [
+    { x: 10, h: 20 }, { x: 50, h: 60 }, { x: 90, h: 120 }, { x: 130, h: 180 },
+    { x: 170, h: 220 }, { x: 210, h: 190 }, { x: 250, h: 130 }, { x: 290, h: 70 },
+    { x: 330, h: 30 }
+  ];
+  
+  const lsl = 90;
+  const usl = 290;
 
-    <ArrowRight className="text-slate-400 rotate-90 sm:rotate-0" size={24} />
-
-    <div className="px-4 py-3 bg-emerald-100 text-emerald-800 rounded-lg text-sm font-bold border-2 border-emerald-400 shadow-sm">
-      Salida (Conocimiento)
-    </div>
-  </div>
-);
-
-const VisualFactoresRespuesta = () => (
-  <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
-    <div className="flex flex-col gap-3">
-      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider text-center mb-1">Factores</h4>
-      <div className="flex items-center gap-2">
-        <div className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold border border-amber-300 w-32 text-center">Temperatura</div>
-        <ArrowRight className="text-amber-400" size={18} />
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold border border-amber-300 w-32 text-center">Presión</div>
-        <ArrowRight className="text-amber-400" size={18} />
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold border border-amber-300 w-32 text-center">Tiempo</div>
-        <ArrowRight className="text-amber-400" size={18} />
-      </div>
-    </div>
-    
-    <div className="hidden sm:block w-px h-32 bg-slate-300 mx-2"></div>
-    <div className="sm:hidden h-px w-32 bg-slate-300 my-2"></div>
-
-    <div className="flex flex-col items-center gap-2">
-      <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider text-center mb-1">Respuesta</h4>
-      <div className="p-5 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg flex flex-col items-center">
-        <BarChart2 className="mb-2" size={32} />
-        <span className="font-bold text-lg">Calidad</span>
-        <span className="text-sm text-blue-100">Rendimiento, etc.</span>
-      </div>
-    </div>
-  </div>
-);
-
-const VisualFactoriales = () => (
-  <div className="flex flex-col items-center justify-center w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
-    <p className="text-sm font-semibold text-slate-600 mb-4">Diseño Factorial 2x2 (Todas las combinaciones)</p>
-    <div className="grid grid-cols-3 gap-1 w-full max-w-xs">
-      {/* Header Row */}
-      <div className="flex items-center justify-center p-2"></div>
-      <div className="flex items-center justify-center p-2 bg-slate-200 font-bold text-slate-700 rounded-t-md text-sm">Factor B (-)</div>
-      <div className="flex items-center justify-center p-2 bg-slate-200 font-bold text-slate-700 rounded-t-md text-sm">Factor B (+)</div>
+  return (
+    <svg width={400 * scale} height={250 * scale} viewBox="0 0 400 250" className="mx-auto drop-shadow-sm font-sans">
+      {/* Grid */}
+      <line x1="40" y1="210" x2="380" y2="210" stroke="#cbd5e1" strokeWidth="2" />
+      <line x1="40" y1="20" x2="40" y2="210" stroke="#cbd5e1" strokeWidth="2" />
       
-      {/* Row 1 */}
-      <div className="flex items-center justify-center p-2 bg-slate-200 font-bold text-slate-700 rounded-l-md text-sm">Factor A (-)</div>
-      <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 border border-indigo-200 text-indigo-800 rounded-sm hover:bg-indigo-200 transition-colors">
-        <span className="font-bold">Comb. 1</span>
-        <span className="text-xs">(-, -)</span>
-      </div>
-      <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 border border-indigo-200 text-indigo-800 rounded-sm hover:bg-indigo-200 transition-colors">
-        <span className="font-bold">Comb. 2</span>
-        <span className="text-xs">(-, +)</span>
-      </div>
+      {/* Bars */}
+      {bars.map((bar, i) => {
+        const isInside = bar.x >= lsl && bar.x <= usl - 40;
+        const fillColor = highlightInside ? (isInside ? '#86efac' : '#fca5a5') : '#93c5fd';
+        return (
+          <rect key={i} x={40 + bar.x} y={210 - bar.h} width="38" height={bar.h} fill={fillColor} stroke="#ffffff" strokeWidth="2" rx="2" className="transition-all duration-500 hover:opacity-80" />
+        );
+      })}
 
-      {/* Row 2 */}
-      <div className="flex items-center justify-center p-2 bg-slate-200 font-bold text-slate-700 rounded-l-md text-sm">Factor A (+)</div>
-      <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 border border-indigo-200 text-indigo-800 rounded-sm hover:bg-indigo-200 transition-colors">
-        <span className="font-bold">Comb. 3</span>
-        <span className="text-xs">(+, -)</span>
-      </div>
-      <div className="flex flex-col items-center justify-center p-4 bg-indigo-100 border border-indigo-200 text-indigo-800 rounded-sm hover:bg-indigo-200 transition-colors">
-        <span className="font-bold">Comb. 4</span>
-        <span className="text-xs">(+, +)</span>
-      </div>
-    </div>
-  </div>
-);
+      {/* Density Curve */}
+      {showDensity && (
+        <path 
+          d="M 40 210 Q 90 200, 110 150 T 190 30 T 270 140 T 350 200 T 380 210" 
+          fill="none" stroke="#2563eb" strokeWidth="4" opacity="0.8" 
+        />
+      )}
 
-const VisualFraccionados = () => (
-  <div className="flex flex-col sm:flex-row items-center justify-center gap-8 w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
-    <div className="flex flex-col items-center">
-      <h4 className="text-sm font-semibold text-slate-600 mb-3 text-center">Diseño Completo (8 Pruebas)</h4>
-      <div className="grid grid-cols-2 gap-2">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-8 h-8 bg-blue-500 rounded-sm opacity-80"></div>
-        ))}
-      </div>
-    </div>
-
-    <ArrowRight className="text-slate-400 hidden sm:block" size={32} />
-    <ArrowRight className="text-slate-400 sm:hidden rotate-90 my-2" size={24} />
-
-    <div className="flex flex-col items-center">
-      <h4 className="text-sm font-semibold text-slate-600 mb-3 text-center">Fracción (4 Pruebas)</h4>
-      <div className="grid grid-cols-2 gap-2">
-        {[...Array(8)].map((_, i) => (
-           <div key={i} className={`w-8 h-8 rounded-sm ${i % 2 === 0 ? 'bg-emerald-500 shadow-md scale-110' : 'bg-slate-200 border border-dashed border-slate-400'}`}></div>
-        ))}
-      </div>
-      <p className="text-xs text-slate-500 mt-2 mt-4 text-center max-w-[150px]">Menos experimentos,<br/>más eficiencia.</p>
-    </div>
-  </div>
-);
-
-const VisualAleatorizados = () => (
-  <div className="flex flex-col items-center justify-center w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
-    <div className="flex gap-4 mb-6">
-      <div className="flex items-center gap-2 bg-white px-3 py-1 rounded-full border shadow-sm">
-        <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-        <span className="text-sm font-medium text-slate-700">Tratamiento A</span>
-      </div>
-      <div className="flex items-center gap-2 bg-white px-3 py-1 rounded-full border shadow-sm">
-        <div className="w-3 h-3 rounded-full bg-orange-500"></div>
-        <span className="text-sm font-medium text-slate-700">Tratamiento B</span>
-      </div>
-    </div>
-
-    <div className="relative w-full max-w-md">
-      <div className="absolute inset-0 flex items-center justify-center opacity-10">
-        <Shuffle size={100} />
-      </div>
-      <div className="grid grid-cols-4 gap-3 relative z-10">
-        {['A', 'B', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B', 'A', 'B'].map((t, i) => (
-          <div key={i} className={`
-            flex flex-col items-center justify-center p-3 rounded-lg border-2
-            ${t === 'A' ? 'bg-purple-50 border-purple-200' : 'bg-orange-50 border-orange-200'}
-          `}>
-            <span className="text-xs text-slate-400 mb-1">Unidad {i+1}</span>
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm
-              ${t === 'A' ? 'bg-purple-500' : 'bg-orange-500'}`}>
-              {t}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-);
-
-const VisualBeneficios = () => (
-  <div className="flex flex-col sm:flex-row items-center justify-center gap-8 w-full p-6 bg-slate-50 rounded-xl border border-slate-200">
-    <div className="w-24 h-24 bg-blue-600 rounded-full flex flex-col items-center justify-center text-white shadow-xl shadow-blue-200 z-10">
-      <Layers size={28} className="mb-1" />
-      <span className="font-black text-lg">DOE</span>
-    </div>
-
-    <div className="flex flex-col gap-4 relative">
-      {/* Líneas conectoras invisibles en móvil, visibles en desktop mediante bordes o pseudo-elementos, simplificado con flexbox */}
-      <div className="flex items-center gap-3 bg-white p-3 pr-6 rounded-r-full rounded-l-xl border border-slate-200 shadow-sm transform transition hover:translate-x-2">
-        <div className="p-2 bg-emerald-100 text-emerald-600 rounded-full"><TrendingUp size={20} /></div>
-        <span className="font-semibold text-slate-700">Menor Variabilidad</span>
-      </div>
-      <div className="flex items-center gap-3 bg-white p-3 pr-6 rounded-r-full rounded-l-xl border border-slate-200 shadow-sm transform transition hover:translate-x-2">
-        <div className="p-2 bg-blue-100 text-blue-600 rounded-full"><CheckCircle2 size={20} /></div>
-        <span className="font-semibold text-slate-700">Mejor Rendimiento</span>
-      </div>
-      <div className="flex items-center gap-3 bg-white p-3 pr-6 rounded-r-full rounded-l-xl border border-slate-200 shadow-sm transform transition hover:translate-x-2">
-        <div className="p-2 bg-amber-100 text-amber-600 rounded-full"><TrendingUp size={20} className="rotate-180" /></div>
-        <span className="font-semibold text-slate-700">Reducción de Costos</span>
-      </div>
-    </div>
-  </div>
-);
-
-const VisualCierre = () => (
-  <div className="flex items-center justify-center w-full p-8 bg-slate-50 rounded-xl border border-slate-200">
-    <div className="relative w-64 h-64">
-      {/* Círculo central estético */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-32 h-32 bg-indigo-50 rounded-full border-4 border-dashed border-indigo-200 animate-[spin_20s_linear_infinite]"></div>
-      </div>
+      {/* LSL / USL Lines */}
+      <line x1={40 + lsl} y1="20" x2={40 + lsl} y2="220" stroke="#ef4444" strokeWidth="3" strokeDasharray="6 6" />
+      <text x={40 + lsl - 15} y="15" fill="#ef4444" fontSize="14" fontWeight="bold">LSL</text>
       
-      {/* Nodos del ciclo */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
-         <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg z-10 border-4 border-white">
-            <Combine size={24} />
-         </div>
-         <span className="mt-2 font-bold text-sm text-slate-700 bg-white/80 px-2 py-1 rounded">Experimentación</span>
-      </div>
+      <line x1={40 + usl} y1="20" x2={40 + usl} y2="220" stroke="#ef4444" strokeWidth="3" strokeDasharray="6 6" />
+      <text x={40 + usl - 15} y="15" fill="#ef4444" fontSize="14" fontWeight="bold">USL</text>
+    </svg>
+  );
+};
 
-      <div className="absolute bottom-4 right-0 flex flex-col items-center">
-         <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center text-white shadow-lg z-10 border-4 border-white">
-            <BarChart2 size={24} />
-         </div>
-         <span className="mt-2 font-bold text-sm text-slate-700 bg-white/80 px-2 py-1 rounded">Análisis</span>
-      </div>
+const ProbabilityPlot = ({ scale = 1 }) => {
+  // Generate pseudo-random points that roughly follow the diagonal
+  const points = Array.from({ length: 40 }).map((_, i) => {
+    const x = 60 + (i * 8);
+    const y = 200 - (i * 4.5) + (Math.random() * 20 - 10);
+    return { x, y };
+  });
 
-      <div className="absolute bottom-4 left-0 flex flex-col items-center">
-         <div className="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center text-white shadow-lg z-10 border-4 border-white">
-            <TrendingUp size={24} />
-         </div>
-         <span className="mt-2 font-bold text-sm text-slate-700 bg-white/80 px-2 py-1 rounded">Mejora</span>
-      </div>
+  return (
+    <svg width={400 * scale} height={250 * scale} viewBox="0 0 400 250" className="mx-auto drop-shadow-sm font-sans">
+      {/* Grid */}
+      <line x1="40" y1="210" x2="380" y2="210" stroke="#cbd5e1" strokeWidth="2" />
+      <line x1="40" y1="20" x2="40" y2="210" stroke="#cbd5e1" strokeWidth="2" />
+      
+      {/* Theoretical Normal Line */}
+      <line x1="60" y1="200" x2="360" y2="30" stroke="#2563eb" strokeWidth="3" />
+      
+      {/* Data Points */}
+      {points.map((p, i) => (
+        <circle key={i} cx={p.x} cy={p.y} r="4" fill="#3b82f6" opacity="0.7" stroke="#ffffff" strokeWidth="1" />
+      ))}
+    </svg>
+  );
+};
 
-      {/* Flechas indicadoras de ciclo */}
-      <RefreshCw className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-slate-300 w-24 h-24 opacity-50" />
-    </div>
-  </div>
-);
+const IntegrationSchema = () => {
+  return (
+    <svg width="100%" height="250" viewBox="0 0 800 250" className="mx-auto font-sans drop-shadow-md">
+      {/* Tool 1 */}
+      <rect x="50" y="40" width="220" height="70" rx="10" fill="#eff6ff" stroke="#3b82f6" strokeWidth="3" />
+      <text x="160" y="75" textAnchor="middle" fill="#1e3a8a" fontSize="18" fontWeight="bold">Histograma</text>
+      <text x="160" y="95" textAnchor="middle" fill="#475569" fontSize="12">Distribución y Límites</text>
 
-// --- DATOS DE LA LECCIÓN ---
+      {/* Tool 2 */}
+      <rect x="50" y="140" width="220" height="70" rx="10" fill="#eff6ff" stroke="#3b82f6" strokeWidth="3" />
+      <text x="160" y="175" textAnchor="middle" fill="#1e3a8a" fontSize="18" fontWeight="bold">Gráfico QQ</text>
+      <text x="160" y="195" textAnchor="middle" fill="#475569" fontSize="12">Ajuste a Normalidad</text>
 
-const lessonData = [
-  {
-    id: 'alcance',
-    title: 'Alcance del diseño de experimentos',
-    explanation: 'El diseño de experimentos (DOE) es una metodología estadística que permite estudiar de manera estructurada cómo diferentes variables influyen en un proceso. Su objetivo es generar conocimiento confiable mediante pruebas controladas, optimizando el aprendizaje con el menor número de experimentos posibles.',
-    VisualComponent: VisualAlcance
-  },
-  {
-    id: 'concepto',
-    title: 'Concepto clave: factores y respuesta',
-    explanation: 'En el DOE se manipulan deliberadamente variables de entrada, llamadas factores, para observar su efecto sobre una variable de salida, denominada respuesta. Este enfoque permite identificar relaciones causa-efecto y comprender cómo los cambios en los factores impactan el resultado.',
-    VisualComponent: VisualFactoresRespuesta
-  },
-  {
-    id: 'factoriales',
-    title: 'Diseños factoriales',
-    explanation: 'Los diseños factoriales estudian todas las combinaciones posibles de los niveles de los factores. Esto permite analizar no solo los efectos individuales, sino también las interacciones entre variables.',
-    VisualComponent: VisualFactoriales
-  },
-  {
-    id: 'fraccionados',
-    title: 'Diseños fraccionados',
-    explanation: 'Los diseños fraccionados utilizan solo una parte de las combinaciones posibles del diseño factorial completo. Se emplean cuando hay muchos factores y se busca reducir el número de experimentos, sacrificando cierta información a cambio de eficiencia.',
-    VisualComponent: VisualFraccionados
-  },
-  {
-    id: 'aleatorizados',
-    title: 'Diseños completamente aleatorizados',
-    explanation: 'En este tipo de diseño, las unidades experimentales se asignan aleatoriamente a los tratamientos. La aleatorización ayuda a evitar sesgos y asegura que los resultados sean atribuibles a los factores estudiados y no a influencias externas.',
-    VisualComponent: VisualAleatorizados
-  },
-  {
-    id: 'beneficios',
-    title: 'Beneficios del diseño de experimentos',
-    explanation: 'El DOE permite identificar las causas de la variabilidad en un proceso, optimizar condiciones operativas y reducir costos asociados a pruebas innecesarias. Su enfoque sistemático mejora la eficiencia del análisis y la calidad de las conclusiones.',
-    VisualComponent: VisualBeneficios
-  },
-  {
-    id: 'cierre',
-    title: 'Cierre conceptual',
-    explanation: 'El diseño de experimentos es una herramienta poderosa para comprender procesos complejos mediante la experimentación controlada. Su aplicación permite tomar decisiones basadas en evidencia y lograr mejoras significativas en calidad y eficiencia.',
-    VisualComponent: VisualCierre
-  }
-];
+      {/* Connecting Lines & Arrows */}
+      <path d="M 270 75 C 330 75, 330 125, 400 125" fill="none" stroke="#94a3b8" strokeWidth="4" markerEnd="url(#arrow)" />
+      <path d="M 270 175 C 330 175, 330 125, 400 125" fill="none" stroke="#94a3b8" strokeWidth="4" />
+      <line x1="400" y1="125" x2="460" y2="125" stroke="#94a3b8" strokeWidth="4" />
 
-// --- COMPONENTE PRINCIPAL APP ---
+      {/* Result */}
+      <rect x="470" y="85" width="280" height="80" rx="15" fill="#f0fdf4" stroke="#22c55e" strokeWidth="4" />
+      <text x="610" y="125" textAnchor="middle" fill="#14532d" fontSize="20" fontWeight="bold">Análisis de Capacidad</text>
+      <text x="610" y="145" textAnchor="middle" fill="#166534" fontSize="14">Evaluación Completa del Proceso</text>
+    </svg>
+  );
+};
+
+// --- ESTRUCTURA DE LA PÁGINA WEB ---
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-800 font-sans pb-12">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-5xl mx-auto px-6 py-5 flex items-center gap-3">
-          <div className="bg-blue-600 p-2 rounded-lg">
-            <GitMerge className="text-white" size={28} />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900 leading-tight">Lección 4</h1>
-            <h2 className="text-sm font-medium text-slate-500 tracking-wide uppercase">Diseño de Experimentos (DOE)</h2>
-          </div>
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans">
+      {/* Encabezado */}
+      <header className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+            Análisis de Capacidad de Proceso
+          </h1>
+          <p className="text-xl md:text-2xl text-blue-100 font-light max-w-2xl mx-auto">
+            Herramientas estadísticas fundamentales: Histograma y Gráfico de Probabilidad
+          </p>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        
-        <div className="mb-10 text-center max-w-3xl mx-auto">
-          <p className="text-lg text-slate-600">
-            Aprende cómo optimizar procesos y tomar decisiones basadas en evidencia mediante pruebas controladas y análisis estadístico estructurado.
-          </p>
-        </div>
+      {/* Contenido Principal */}
+      <main className="max-w-5xl mx-auto py-12 px-6 space-y-16">
 
-        <div className="flex flex-col gap-10">
-          {lessonData.map((section, index) => (
-            <article 
-              key={section.id} 
-              className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col md:flex-row transition-all hover:shadow-md"
-            >
-              {/* Sección de Texto */}
-              <div className="p-8 md:w-1/2 flex flex-col justify-center border-b md:border-b-0 md:border-r border-slate-100">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold text-sm">
-                    {index + 1}
-                  </span>
-                  <h3 className="text-xl font-bold text-slate-900">{section.title}</h3>
-                </div>
-                <p className="text-slate-600 leading-relaxed text-base">
-                  {section.explanation}
+        {/* Sección 1: Introducción */}
+        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="md:flex">
+            <div className="md:w-1/2 p-8 lg:p-10">
+              <div className="flex items-center gap-3 mb-4 text-blue-600">
+                <BookOpen size={28} />
+                <h2 className="text-2xl font-bold text-slate-800">1. Introducción</h2>
+              </div>
+              <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                El análisis de capacidad de proceso evalúa si un proceso es capaz de cumplir con especificaciones predefinidas. Dos herramientas fundamentales para este análisis son el <strong>histograma</strong> y el <strong>gráfico de probabilidad</strong>, que permiten comparar la distribución de los datos con los límites de especificación.
+              </p>
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                <p className="text-sm text-blue-800 font-medium flex items-center gap-2">
+                  <Info size={16} /> Concepto Clave
                 </p>
+                <p className="text-blue-700 text-sm mt-1">Evaluar si la variabilidad natural del proceso cabe dentro de las tolerancias permitidas.</p>
               </div>
+            </div>
+            <div className="md:w-1/2 bg-slate-100 p-8 flex flex-col justify-center items-center border-t md:border-t-0 md:border-l border-slate-200">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Sugerencia Visual Aplicada</span>
+              <Histogram showDensity={true} />
+              <p className="text-center text-sm text-slate-500 mt-4">
+                Histograma con curvas de densidad superpuestas y líneas verticales (LSL y USL).
+              </p>
+            </div>
+          </div>
+        </section>
 
-              {/* Sección Visual */}
-              <div className="p-6 md:w-1/2 flex items-center justify-center bg-slate-50/50">
-                <section.VisualComponent />
+        {/* Sección 2: Uso del Histograma */}
+        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="md:flex flex-row-reverse">
+            <div className="md:w-1/2 p-8 lg:p-10">
+              <div className="flex items-center gap-3 mb-4 text-emerald-600">
+                <BarChart2 size={28} />
+                <h2 className="text-2xl font-bold text-slate-800">2. Uso del Histograma</h2>
               </div>
-            </article>
-          ))}
-        </div>
+              <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                El histograma permite visualizar la <strong>forma</strong>, <strong>dispersión</strong> y <strong>centrado</strong> de los datos respecto a los límites de especificación. Es extremadamente útil para detectar de manera rápida:
+              </p>
+              <ul className="space-y-3 mb-6">
+                {['Sesgos en la producción.', 'Asimetrías en la distribución de los datos.', 'Variabilidad excesiva fuera de los límites.'].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-slate-600">
+                    <CheckCircle className="text-emerald-500 mt-1 shrink-0" size={18} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="md:w-1/2 bg-slate-100 p-8 flex flex-col justify-center items-center border-t md:border-t-0 md:border-r border-slate-200">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Sugerencia Visual Aplicada</span>
+              <Histogram showDensity={false} highlightInside={true} />
+              <p className="text-center text-sm text-slate-500 mt-4">
+                Barras bien definidas destacando en verde los datos que caen dentro de los límites y en rojo los defectuosos.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Sección 3: Gráfico de Probabilidad */}
+        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="md:flex">
+            <div className="md:w-1/2 p-8 lg:p-10">
+              <div className="flex items-center gap-3 mb-4 text-purple-600">
+                <Activity size={28} />
+                <h2 className="text-2xl font-bold text-slate-800">3. Gráfico de Probabilidad</h2>
+              </div>
+              <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                El gráfico de probabilidad (o <em>Probability Plot</em>) compara los datos recolectados con una distribución teórica, usualmente la <strong>distribución normal</strong>.
+              </p>
+              <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                Si los puntos trazados siguen aproximadamente una línea recta, se puede asumir la normalidad de los datos. Esta condición es fundamental para poder calcular e interpretar correctamente los índices de capacidad (como Cp y Cpk).
+              </p>
+            </div>
+            <div className="md:w-1/2 bg-slate-100 p-8 flex flex-col justify-center items-center border-t md:border-t-0 md:border-l border-slate-200">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Sugerencia Visual Aplicada</span>
+              <ProbabilityPlot />
+              <p className="text-center text-sm text-slate-500 mt-4">
+                Puntos alineados cerca de la recta teórica, indicando un buen ajuste a la normalidad.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Sección 4: Ejemplo en R */}
+        <section className="bg-slate-900 rounded-2xl shadow-lg border border-slate-800 overflow-hidden text-slate-300">
+          <div className="p-8 lg:p-10 border-b border-slate-800">
+             <div className="flex items-center gap-3 mb-4 text-cyan-400">
+                <Code size={28} />
+                <h2 className="text-2xl font-bold text-white">4. Ejemplo Práctico en R</h2>
+              </div>
+              <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-3xl">
+                A continuación se presenta un ejemplo en el lenguaje R que combina el histograma y el gráfico de probabilidad para evaluar la capacidad de un proceso simulado.
+              </p>
+
+              {/* Grid 2 Columnas para Código y Análisis */}
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Código */}
+                <div className="bg-slate-950 rounded-xl p-6 font-mono text-sm overflow-x-auto border border-slate-800/50">
+<pre className="text-slate-300">
+<span className="text-slate-500"># Generar datos simulados</span>
+<span className="text-cyan-400">set.seed</span>(123)
+datos {'<-'} <span className="text-cyan-400">rnorm</span>(100, mean = 50, sd = 5)
+
+<span className="text-slate-500"># Límites de especificación</span>
+LSL {'<-'} 40
+USL {'<-'} 60
+
+<span className="text-slate-500"># Histograma</span>
+<span className="text-cyan-400">hist</span>(datos,
+     breaks = 15,
+     col = <span className="text-green-400">"lightblue"</span>,
+     main = <span className="text-green-400">"Histograma del proceso"</span>,
+     xlab = <span className="text-green-400">"Valores"</span>)
+<span className="text-cyan-400">abline</span>(v = LSL, col = <span className="text-green-400">"red"</span>, lwd = 2, lty = 2)
+<span className="text-cyan-400">abline</span>(v = USL, col = <span className="text-green-400">"red"</span>, lwd = 2, lty = 2)
+
+<span className="text-slate-500"># Gráfico de probabilidad normal</span>
+<span className="text-cyan-400">qqnorm</span>(datos,
+       main = <span className="text-green-400">"Gráfico de probabilidad normal"</span>)
+<span className="text-cyan-400">qqline</span>(datos, col = <span className="text-green-400">"blue"</span>, lwd = 2)
+</pre>
+                </div>
+                
+                {/* Explicación del código */}
+                <div className="flex flex-col justify-center space-y-6">
+                  <div className="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <BarChart2 size={18} className="text-blue-400"/> Interpretación del Histograma
+                    </h3>
+                    <p className="text-sm">Permite verificar visualmente si la mayoría de los datos cae dentro de los límites de especificación definidos (LSL y USL).</p>
+                  </div>
+                  <div className="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <Activity size={18} className="text-purple-400"/> Interpretación del QQ Plot
+                    </h3>
+                    <p className="text-sm">Ayuda a evaluar si los datos siguen una distribución normal, condición imperativa para interpretar los índices de capacidad numéricos.</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+          
+          {/* Visualización Lado a Lado (Sugerencia Visual) */}
+          <div className="bg-slate-800 p-8 flex flex-col md:flex-row gap-8 justify-center items-center">
+            <div className="text-center w-full md:w-1/2">
+               <div className="bg-white p-4 rounded-xl shadow-inner inline-block">
+                 <Histogram scale={0.8} />
+               </div>
+               <p className="text-sm text-slate-400 mt-3 font-medium">Histograma del proceso</p>
+            </div>
+            <div className="text-center w-full md:w-1/2">
+               <div className="bg-white p-4 rounded-xl shadow-inner inline-block">
+                 <ProbabilityPlot scale={0.8} />
+               </div>
+               <p className="text-sm text-slate-400 mt-3 font-medium">Gráfico QQ (Normalidad)</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Sección 5: Conclusión y Cierre */}
+        <section className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden p-8 lg:p-12 text-center">
+          <div className="inline-flex items-center justify-center p-4 bg-emerald-100 text-emerald-600 rounded-full mb-6">
+            <GitMerge size={32} />
+          </div>
+          <h2 className="text-3xl font-bold text-slate-800 mb-6">Cierre e Integración</h2>
+          <p className="text-slate-600 text-xl leading-relaxed max-w-4xl mx-auto mb-12">
+            El uso combinado del histograma y el gráfico de probabilidad proporciona una visión clara y robusta de la capacidad del proceso, permitiendo evaluar de manera simultánea la distribución de los datos y su ajuste a supuestos estadísticos clave.
+          </p>
+
+          {/* Sugerencia Visual Aplicada: Esquema Integrador */}
+          <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200 mt-8 max-w-4xl mx-auto">
+             <span className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6 block">Esquema Integrador</span>
+             <IntegrationSchema />
+          </div>
+        </section>
+
       </main>
 
       {/* Footer */}
-      <footer className="max-w-5xl mx-auto px-6 mt-12 text-center text-slate-400 text-sm">
-        <p>Módulo de Diseño de Experimentos • Formato Educativo Interactivo</p>
+      <footer className="bg-slate-900 text-slate-400 py-8 text-center text-sm border-t border-slate-800">
+        <p>Generado por Ideastoweb • Transformando textos académicos en experiencias interactivas.</p>
       </footer>
     </div>
   );
